@@ -53,8 +53,6 @@ class PeopleViewController: UITableViewController, MoviesTableViewControllerDele
                             let resultsArr = results as! NSArray
                             for result in resultsArr {
                                 self.people.append(result as! NSDictionary)
-                                print(self.people.count)
-                                print(result)
                             }
                         }
                         if let next = jsonResult["next"] {
@@ -70,8 +68,7 @@ class PeopleViewController: UITableViewController, MoviesTableViewControllerDele
             })
             
             task.resume()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                print(self.people.count)
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
@@ -91,8 +88,6 @@ class PeopleViewController: UITableViewController, MoviesTableViewControllerDele
                             let resultsArr = results as! NSArray
                             for result in resultsArr {
                                 otherVC?.films.append(result as! NSDictionary)
-                                print(otherVC?.films.count)
-                                print(result)
                             }
                         }
                         if let next = jsonResult["next"] {
@@ -108,10 +103,10 @@ class PeopleViewController: UITableViewController, MoviesTableViewControllerDele
             })
             
             task.resume()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                print(self.people.count)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                print("reload")
                 otherVC?.tableView.reloadData()
-            }
+            })
         }
         
     }
