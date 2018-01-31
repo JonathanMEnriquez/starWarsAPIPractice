@@ -15,6 +15,7 @@
 		CE299B0F201ECD02000E9D69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE299B0D201ECD02000E9D69 /* LaunchScreen.storyboard */; };
 		CE299B1A201ECD03000E9D69 /* starWarsAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE299B19201ECD03000E9D69 /* starWarsAPITests.swift */; };
 		CE299B25201ECD03000E9D69 /* starWarsAPIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE299B24201ECD03000E9D69 /* starWarsAPIUITests.swift */; };
+		CE3A4F6020214FC900A02A75 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A4F5F20214FC900A02A75 /* MoviesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CE299B20201ECD03000E9D69 /* starWarsAPIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starWarsAPIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE299B24201ECD03000E9D69 /* starWarsAPIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starWarsAPIUITests.swift; sourceTree = "<group>"; };
 		CE299B26201ECD03000E9D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE3A4F5F20214FC900A02A75 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				CE299B05201ECD02000E9D69 /* Main.storyboard */,
 				CE299B03201ECD02000E9D69 /* PeopleViewController.swift */,
+				CE3A4F5F20214FC900A02A75 /* MoviesTableViewController.swift */,
 				CE299B01201ECD02000E9D69 /* AppDelegate.swift */,
 				CE299B0B201ECD02000E9D69 /* Assets.xcassets */,
 				CE299B0D201ECD02000E9D69 /* LaunchScreen.storyboard */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3A4F6020214FC900A02A75 /* MoviesTableViewController.swift in Sources */,
 				CE299B04201ECD02000E9D69 /* PeopleViewController.swift in Sources */,
 				CE299B02201ECD02000E9D69 /* AppDelegate.swift in Sources */,
 				CE299B0A201ECD02000E9D69 /* starWarsAPI.xcdatamodeld in Sources */,

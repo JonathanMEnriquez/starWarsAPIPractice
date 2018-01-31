@@ -8,14 +8,17 @@
 
 import UIKit
 
-class PeopleViewController: UITableViewController {
+class PeopleViewController: UITableViewController, MoviesTableViewControllerDelegate {
 
     var people = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getStarWars(urlToUse: "https://swapi.co/api/people/")
+        getStarWars(urlToUse: "https://swapi.co/api/people/", delegateFunction: false)
+        
+        let moviesVC = getOtherVC()
+        moviesVC.delegate = self
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -29,46 +32,93 @@ class PeopleViewController: UITableViewController {
         return cell
     }
     
-    func getStarWars(urlToUse: String){
+    func getStarWars(urlToUse: String, delegateFunction: Bool){
         
+        var otherVC: MoviesTableViewController?
         guard let url = URL(string: urlToUse) else {
             return
         }
         
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: url, completionHandler: {
-            data, response, error in
+        if delegateFunction == false {
+            let session = URLSession.shared
             
-            do {
-                if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                    
-                    if let results = jsonResult["results"] {
+            let task = session.dataTask(with: url, completionHandler: {
+                data, response, error in
+                
+                do {
+                    if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
                         
-                        let resultsArr = results as! NSArray
-                        for result in resultsArr {
-                            self.people.append(result as! NSDictionary)
-                            print(self.people.count)
-                            print(result)
+                        if let results = jsonResult["results"] {
+                            
+                            let resultsArr = results as! NSArray
+                            for result in resultsArr {
+                                self.people.append(result as! NSDictionary)
+                                print(self.people.count)
+                                print(result)
+                            }
+                        }
+                        if let next = jsonResult["next"] {
+                            self.getStarWars(urlToUse: String(describing: next), delegateFunction: false)
+                        }
+                        else {
+                            return
                         }
                     }
-                    if let next = jsonResult["next"] {
-                        self.getStarWars(urlToUse: String(describing: next))
-                    }
-                    else {
-                        return
-                    }
+                } catch {
+                    print(error)
                 }
-            } catch {
-                print(error)
+            })
+            
+            task.resume()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                print(self.people.count)
+                self.tableView.reloadData()
             }
-        })
-        
-        task.resume()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            print(self.people.count)
-            self.tableView.reloadData()
         }
+        
+        else {
+            print("went into else")
+            let session = URLSession.shared
+            otherVC = getOtherVC()
+            let task = session.dataTask(with: url, completionHandler: {
+                data, response, error in
+                
+                do {
+                    if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                        
+                        if let results = jsonResult["results"] {
+                            
+                            let resultsArr = results as! NSArray
+                            for result in resultsArr {
+                                otherVC?.films.append(result as! NSDictionary)
+                                print(otherVC?.films.count)
+                                print(result)
+                            }
+                        }
+                        if let next = jsonResult["next"] {
+                            self.getStarWars(urlToUse: String(describing: next), delegateFunction: true)
+                        }
+                        else {
+                            return
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            })
+            
+            task.resume()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                print(self.people.count)
+                otherVC?.tableView.reloadData()
+            }
+        }
+        
+    }
+    
+    func getOtherVC() -> MoviesTableViewController {
+        let moviesVC = tabBarController?.viewControllers![1] as! MoviesTableViewController
+        return moviesVC
     }
 }
 
