@@ -103,10 +103,10 @@ class PeopleViewController: UITableViewController, MoviesTableViewControllerDele
             })
             
             task.resume()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+            DispatchQueue.main.async{
                 print("reload")
                 otherVC?.tableView.reloadData()
-            })
+            }
         }
         
     }

@@ -17,6 +17,11 @@ class MoviesTableViewController: UITableViewController {
     var delegate: MoviesTableViewControllerDelegate?
     var films = [NSDictionary]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        delegate?.getStarWars(urlToUse: "https://swapi.co/api/films/", delegateFunction: true)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("call delegate")
